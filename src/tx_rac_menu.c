@@ -371,7 +371,7 @@ struct // MENU_FEATURES
 } static const sItemFunctionsFeatures[MENUITEM_FEATURES_COUNT] =
 {
     [MENUITEM_FEATURES_RTC_TYPE]              = {DrawChoices_Features_Rtc_Type,             ProcessInput_Options_Two},
-    [MENUITEM_FEATURES_SHINY_CHANCE]          = {DrawChoices_Features_ShinyChance,          ProcessInput_Options_Five},
+    [MENUITEM_FEATURES_SHINY_CHANCE]          = {DrawChoices_Features_ShinyChance,          ProcessInput_Options_Six},
     [MENUITEM_FEATURES_ITEM_DROP]             = {DrawChoices_Features_ItemDrop,             ProcessInput_Options_Two},
     [MENUITEM_FEATURES_EASY_FEEBAS]           = {DrawChoices_Features_EasyFeebas,           ProcessInput_Options_Hardcoded},
     [MENUITEM_FEATURES_PKMN_DEATH]            = {DrawChoices_Features_Pkmn_Death,           ProcessInput_Options_Hardcoded},
@@ -774,6 +774,7 @@ static const u8 sText_Description_Features_ShinyChance_4096[]         = _("Low c
 static const u8 sText_Description_Features_ShinyChance_2048[]         = _("Decent chance of SHINY encounter.");
 static const u8 sText_Description_Features_ShinyChance_1024[]         = _("High chance of SHINY encounter.");
 static const u8 sText_Description_Features_ShinyChance_512[]          = _("Very high chance of SHINY encounter.");
+static const u8 sText_Description_Features_ShinyChance_256[]          = _("Ultra high chance of SHINY encounter.");
 static const u8 sText_Description_Features_EasyFeebas_On[]            = _("{COLOR 7}{COLOR 8}This feature is not currently\nsupported for this game.");
 static const u8 sText_Description_Features_EasyFeebas_Off[]           = _("{COLOR 7}{COLOR 8}This feature is not currently\nsupported for this game.");
 static const u8 sText_Description_Features_Pkmn_Death_On[]            = _("{COLOR 7}{COLOR 8}YOUR {PKMN} WILL DIE!! Getting to zero\n{PKMN} could be the end of your save."); //{COLOR 1}{COLOR 2} 
@@ -784,13 +785,13 @@ static const u8 sText_Description_Features_Next[]                     = _("Conti
 
 static const u8 *const sOptionMenuItemDescriptionsFeatures[MENUITEM_FEATURES_COUNT][5] =
 {
-    [MENUITEM_FEATURES_RTC_TYPE]              = {sText_Description_Features_RTC_Type_RTC,           sText_Description_Features_RTC_Type_FakeRTC,      sText_Empty,                                        sText_Empty,                                        sText_Empty},
-    [MENUITEM_FEATURES_SHINY_CHANCE]          = {sText_Description_Features_ShinyChance_8192,       sText_Description_Features_ShinyChance_4096,      sText_Description_Features_ShinyChance_2048,        sText_Description_Features_ShinyChance_1024,        sText_Description_Features_ShinyChance_512},
-    [MENUITEM_FEATURES_ITEM_DROP]             = {sText_Description_Features_ItemDrop_Off,           sText_Description_Features_ItemDrop_On,           sText_Empty,                                        sText_Empty,                                        sText_Empty},
-    [MENUITEM_FEATURES_EASY_FEEBAS]           = {sText_Description_Features_EasyFeebas_Off,         sText_Description_Features_EasyFeebas_On,         sText_Empty,                                        sText_Empty,                                        sText_Empty},
-    [MENUITEM_FEATURES_PKMN_DEATH]            = {sText_Description_Features_Pkmn_Death_Off,         sText_Description_Features_Pkmn_Death_On,         sText_Empty,                                        sText_Empty,                                        sText_Empty},
-    [MENUITEM_FEATURES_UNLIMITED_WT]          = {sText_Description_Features_Unlimited_WT_On,        sText_Description_Features_Unlimited_WT_Off,      sText_Empty,                                        sText_Empty,                                        sText_Empty},
-    [MENUITEM_FEATURES_NEXT]                  = {sText_Description_Features_Next,                   sText_Empty,                                      sText_Empty,                                        sText_Empty,                                        sText_Empty},
+    [MENUITEM_FEATURES_RTC_TYPE]              = {sText_Description_Features_RTC_Type_RTC,           sText_Description_Features_RTC_Type_FakeRTC,      sText_Empty,                                        sText_Empty,                                        sText_Empty,                                      sText_Empty},
+    [MENUITEM_FEATURES_SHINY_CHANCE]          = {sText_Description_Features_ShinyChance_8192,       sText_Description_Features_ShinyChance_4096,      sText_Description_Features_ShinyChance_2048,        sText_Description_Features_ShinyChance_1024,        sText_Description_Features_ShinyChance_512,       sText_Description_Features_ShinyChance_256},
+    [MENUITEM_FEATURES_ITEM_DROP]             = {sText_Description_Features_ItemDrop_Off,           sText_Description_Features_ItemDrop_On,           sText_Empty,                                        sText_Empty,                                        sText_Empty,                                      sText_Empty},
+    [MENUITEM_FEATURES_EASY_FEEBAS]           = {sText_Description_Features_EasyFeebas_Off,         sText_Description_Features_EasyFeebas_On,         sText_Empty,                                        sText_Empty,                                        sText_Empty,                                      sText_Empty},
+    [MENUITEM_FEATURES_PKMN_DEATH]            = {sText_Description_Features_Pkmn_Death_Off,         sText_Description_Features_Pkmn_Death_On,         sText_Empty,                                        sText_Empty,                                        sText_Empty,                                      sText_Empty},
+    [MENUITEM_FEATURES_UNLIMITED_WT]          = {sText_Description_Features_Unlimited_WT_On,        sText_Description_Features_Unlimited_WT_Off,      sText_Empty,                                        sText_Empty,                                        sText_Empty,                                      sText_Empty},
+    [MENUITEM_FEATURES_NEXT]                  = {sText_Description_Features_Next,                   sText_Empty,                                      sText_Empty,                                        sText_Empty,                                        sText_Empty,                                      sText_Empty},
 };
 
 static const u8 sText_Description_Randomizer_Off[]                  = _("{COLOR 7}{COLOR 8}This feature is not currently\nsupported for this game.");
@@ -2125,12 +2126,12 @@ static void DrawChoices_Options_Six(const u8 *const *const strings, int selectio
 {
     static const u8 choiceOrders[][3] =
     {
-        {0, 1},
-        {1, 2},
-        {2, 3},
-        {3, 4},
-        {4, 5},
-        {5, 0},
+        {0, 1, 2},
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 4},
+        {3, 4, 5},
+        {3, 4, 5},
     };
     u8 styles[6] = {0};
     int xMid;

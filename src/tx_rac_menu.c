@@ -246,6 +246,7 @@ static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style, bool8 act
 static void DrawChoices_Options_Three(const u8 *const *const strings, int selection, int y, bool8 active);
 static void DrawChoices_Options_Four(const u8 *const *const strings, int selection, int y, bool8 active);
 static void DrawChoices_Options_Five(const u8 *const *const strings, int selection, int y, bool8 active);
+static void DrawChoices_Options_Six(const u8 *const *const strings, int selection, int y, bool8 active);
 static void ReDrawAll(void);
 static void DrawBgWindowFrames(void);
 
@@ -2119,6 +2120,29 @@ static void DrawChoices_Options_Five(const u8 *const *const strings, int selecti
     DrawOptionMenuChoice(strings[order[2]], GetStringRightAlignXOffset(1, strings[order[2]], 198), y, styles[order[2]], active);
 }
 
+
+static void DrawChoices_Options_Six(const u8 *const *const strings, int selection, int y, bool8 active)
+{
+    static const u8 choiceOrders[][3] =
+    {
+        {0, 1, 2},
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 4},
+        {3, 4, 5},
+        {3, 4, 5},
+    };
+    u8 styles[6] = {0};
+    int xMid;
+    const u8 *order = choiceOrders[selection];
+    styles[selection] = 1;
+    xMid = GetMiddleX(strings[order[0]], strings[order[1]], strings[order[2]]);
+
+    DrawOptionMenuChoice(strings[order[0]], 104, y, styles[order[0]], active);
+    DrawOptionMenuChoice(strings[order[1]], xMid, y, styles[order[1]], active);
+    DrawOptionMenuChoice(strings[order[2]], GetStringRightAlignXOffset(1, strings[order[2]], 198), y, styles[order[2]], active);
+}
+
 static void ReDrawAll(void)
 {
     u8 menuItem = sOptions->menuCursor[sOptions->submenu] - sOptions->visibleCursor[sOptions->submenu];
@@ -2747,7 +2771,7 @@ static const u8 *const sText_Challenges_ShinyChance_Strings[] = {sText_Challenge
 static void DrawChoices_Features_ShinyChance(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_FEATURES_SHINY_CHANCE);
-    DrawChoices_Options_Five(sText_Challenges_ShinyChance_Strings, selection, y, active);
+    DrawChoices_Options_Six(sText_Challenges_ShinyChance_Strings, selection, y, active);
     
     if (selection == 0)
     {

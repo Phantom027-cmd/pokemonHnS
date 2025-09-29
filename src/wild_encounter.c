@@ -423,7 +423,6 @@ static u8 PickWildMonNature(void)
     else if (gSaveBlock1Ptr->tx_Mode_Synchronize == 1)
         if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
         && GetMonAbility(&gPlayerParty[0]) == ABILITY_SYNCHRONIZE)
-        && int(0)
         {
             return GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY) % NUM_NATURES;
         }

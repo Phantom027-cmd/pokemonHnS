@@ -5038,6 +5038,12 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
                     shinyValue = HIHALF(value) ^ LOHALF(value) ^ HIHALF(personality) ^ LOHALF(personality);
                     rolls++;
                 } while (shinyValue >= 128 && rolls < shinyRolls);   
+            else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 5) // 1/256
+                do {
+                    personality = Random32();
+                    shinyValue = HIHALF(value) ^ LOHALF(value) ^ HIHALF(personality) ^ LOHALF(personality);
+                    rolls++;
+                } while (shinyValue >= 256 && rolls < shinyRolls);  
         }
     }
 
@@ -10767,6 +10773,15 @@ const u32 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 p
             return gMonPaletteTable[species].data;
         }
     }
+    else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 5) // 1/256
+    {
+        if (shinyValue < 256 && personality !=0)
+            return gMonShinyPaletteTable[species].data;
+        else
+        {
+            return gMonPaletteTable[species].data;
+        }
+    }
 }
 const struct CompressedSpritePalette *GetMonSpritePalStruct(struct Pokemon *mon)
 {
@@ -10826,7 +10841,16 @@ const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u
         {
             return &gMonPaletteTable[species];
         }
-    }      
+    }     
+    else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 5) // 1/256
+    {
+        if (shinyValue < 256)
+            return &gMonShinyPaletteTable[species];
+        else
+        {
+            return &gMonPaletteTable[species];
+        }
+    }   
 }
 
 bool32 IsHMMove2(u16 move)
@@ -11027,6 +11051,12 @@ bool8 IsShinyOtIdPersonality(u32 otId, u32 personality)
     else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 4) // 1/512
     {
         if (shinyValue < 128)
+            retVal = TRUE;
+        return retVal;
+    }
+    else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 5) // 1/256
+    {
+        if (shinyValue < 256)
             retVal = TRUE;
         return retVal;
     }

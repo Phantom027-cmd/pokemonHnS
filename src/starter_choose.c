@@ -687,6 +687,12 @@ static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y)
         gSprites[spriteId].oam.priority = 0;
         return spriteId;
     }
+    else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 5) // 1/256
+    {
+        spriteId = CreateMonPicSprite_Affine(species, 256, 0, MON_PIC_AFFINE_FRONT, x, y, 14, TAG_NONE);
+        gSprites[spriteId].oam.priority = 0;
+        return spriteId;
+    }
 }
 
 static void SpriteCB_SelectionHand(struct Sprite *sprite)

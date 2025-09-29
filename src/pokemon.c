@@ -4982,6 +4982,12 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
                 value = Random32();
                 shinyValue = GET_SHINY_VALUE(value, personality);
             } while (shinyValue < 128);
+        else if (gSaveBlock1Ptr->tx_Features_ShinyChance == 5) // 1/256
+            do
+            {
+                value = Random32();
+                shinyValue = GET_SHINY_VALUE(value, personality);
+            } while (shinyValue < 256);
     }
     else if (otIdType == OT_ID_PRESET)
     {

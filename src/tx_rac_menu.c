@@ -2742,7 +2742,8 @@ static const u8 sText_Challenges_ShinyChance_4096[]   = _("4096");
 static const u8 sText_Challenges_ShinyChance_2048[]   = _("2048");
 static const u8 sText_Challenges_ShinyChance_1024[]   = _("1024");
 static const u8 sText_Challenges_ShinyChance_512[]    = _("512");
-static const u8 *const sText_Challenges_ShinyChance_Strings[] = {sText_Challenges_ShinyChance_8192,  sText_Challenges_ShinyChance_4096,  sText_Challenges_ShinyChance_2048,  sText_Challenges_ShinyChance_1024,  sText_Challenges_ShinyChance_512};
+static const u8 sText_Challenges_ShinyChance_256[]    = _("256");
+static const u8 *const sText_Challenges_ShinyChance_Strings[] = {sText_Challenges_ShinyChance_8192,  sText_Challenges_ShinyChance_4096,  sText_Challenges_ShinyChance_2048,  sText_Challenges_ShinyChance_1024,  sText_Challenges_ShinyChance_512, sText_Challenges_ShinyChance_256};
 static void DrawChoices_Features_ShinyChance(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_FEATURES_SHINY_CHANCE);
@@ -2764,9 +2765,13 @@ static void DrawChoices_Features_ShinyChance(int selection, int y)
     {
         gSaveBlock1Ptr->tx_Features_ShinyChance = 3; // 1/1024
     }
-    else //(selection == 4)
+    else if (selection == 4)
     {
         gSaveBlock1Ptr->tx_Features_ShinyChance = 4; // 1/512
+    }
+    else //(selection == 5)
+    {
+        gSaveBlock1Ptr->tx_Features_ShinyChance = 5; // 1/256
     }
 }
 
